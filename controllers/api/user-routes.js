@@ -24,6 +24,26 @@ router.post('/', (req, res) => {
         console.log(err);
         res.status(400).json(err)
     })
+});
+
+router.get('/:id', (req, res) => {
+    User.findOne({
+        attributes: {exclude: ['password']},
+        where: {
+            id: req.params.id
+        }
+    })
+    .then(dbUserData => {
+        if (!dbUserData) {
+            res.status(404).json({ message: "No user with this id" });
+            return;
+        }
+        res.json(dbUserData)
+    })
+    .catch(err => {
+        console.log(err);
+        res.status(400).json(err)
+    })
 })
 
 module.exports = router;
