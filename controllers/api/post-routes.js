@@ -21,6 +21,25 @@ router.post('/', (req, res) => {
             console.log(err);
             res.status(400).json(err);
         })
+});
+
+router.get('/:id', (req, res) => {
+    Post.findOne({
+        where: {
+            id: req.params.id
+        }
+    })
+        .then(dbPostData => {
+            if (!dbPostData) {
+                res.status(400).json({ message: "No post with this id" });
+                return;
+            }
+            res.json(dbPostData);
+        })
+        .catch(err => {
+            console.log(err)
+            res.status(400).json(err)
+        })
 })
 
 module.exports = router;
