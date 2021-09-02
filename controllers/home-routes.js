@@ -34,9 +34,10 @@ router.get('/', (req, res) => {
 })
     .then(dbPostData => {
       const posts = dbPostData.map(post => post.get({ plain: true }));
-
+      const loggedIn = req.session.loggedIn;
       res.render('homepage', {
-        posts
+        posts,
+        loggedIn
       });
     })
     .catch(err => {
@@ -46,6 +47,11 @@ router.get('/', (req, res) => {
 });
 
 router.get('/login', (req, res) => {
+  if (req.session.loggedIn) {
+    res.redirect('/');
+    return;
+  }
+
   res.render('login');
 });
 
