@@ -89,4 +89,20 @@ router.get('/edit/:id', (req,res) => {
     })
 })
 
+router.post('/add', (req, res) => {
+    Post.create({
+        post_title: req.body.post_title,
+        post_content: req.body.post_content,
+        user_id: req.session.user_id
+    })
+        .then(dbPostData => res.json(dbPostData))
+        .catch(err => {
+            console.log(err);
+            res.status(400).json(err);
+        })
+});
+
+router.get('/add', withAuth, (req, res) => {
+    res.render('add-post')
+})
 module.exports = router;
