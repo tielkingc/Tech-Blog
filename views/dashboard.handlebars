@@ -3,7 +3,7 @@
     {{#each posts as |post|}}
   
     {{> post-info post }}
-  
+    <span class="nav-item pill edit"><a href="/dashboard/edit/{{post.id}}" class="nav-link text">Edit post</a></span>
   {{/each}}
   </div>
 </div>
